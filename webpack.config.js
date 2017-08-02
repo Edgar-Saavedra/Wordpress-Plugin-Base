@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     cache: true,
     entry: {
-        ExampleApp : './assets/js/Apps/React/ExampleApp/index.js',
+        ExampleApp : './assets/js/Apps/JS/ExampleApp/index.js',
     },
     output: {
         path: path.join(__dirname, "assets/dist"),
@@ -41,7 +41,7 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react'],
+                    presets: ['es2015'],
                     //presets: ['es2015'],
                     cacheDirectory: true
                 }
