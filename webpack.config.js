@@ -1,25 +1,28 @@
-var path = require('path');
-var webpack = require('webpack');
+const webpack = require('webpack'); //to access built-in plugins
+const path = require('path');
 
-module.exports = {
-    cache: true,
+const config = {
     entry: {
-        ExampleApp : './assets/js/Apps/JS/ExampleApp/index.js',
+        //ExampleApp : './assets/js/Apps/JS/ExampleApp/index.js',
+        ExampleReact : './assets/js/Apps/React/ExampleReact/index.js'
     },
     output: {
-        path: path.join(__dirname, "assets/dist"),
-        publicPath: "assets/dist/",
-        filename: "[name].js",
-        chunkFilename: "[chunkhash].js"
-        // path: __dirname, filename: 'bundle.js'
+        path: path.resolve(__dirname, 'assets/dist/'),
+        filename: "[name].js"
     },
-    resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+    externals: {
+        //don't bundle the 'react' npm package with our bundle.js
+        //but get it from a global 'React' variable
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'jquery': '$',
+        'Router' : 'react-router-dom',
+        'Route' : 'react-router-dom',
+        'Link' : 'react-router-dom'
+        //'ReactRedux' : 'redux',
     },
     module: {
-        loaders: [
-            //https://stackoverflow.com/questions/36100108/requirefile-json-doesnt-work-in-webpack
+        rules: [
             {
                 test: /\.json$/,
                 loader: 'json-loader'
@@ -41,49 +44,13 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015'],
+                    presets: ['es2015', 'react'],
                     //presets: ['es2015'],
                     cacheDirectory: true
                 }
             }
         ]
-    },
-    externals: {
-        //don't bundle the 'react' npm package with our bundle.js
-        //but get it from a global 'React' variable
-        'react': 'React',
-        'react-dom': 'ReactDOM',
-        'jquery': '$',
-        'Router' : 'react-router-dom',
-        'Route' : 'react-router-dom',
-        'Link' : 'react-router-dom'
-        //'ReactRedux' : 'redux',
-    },
-    plugins: [
-        /*
-        new webpack.ProvidePlugin({
-            // Automtically detect jQuery and $ as free var in modules
-            // and inject the jquery library
-            // This is required by many jquery plugins
-            jQuery: "jquery",
-            $: "jquery"
-        }),
-        */
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
-        //https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-        new webpack.optimize.UglifyJsPlugin({
-            output: {
-                comments: false
-            },
-            compress: {
-                warnings: false,
-                booleans: false,
-                unused: false
-            }
-        })
-    ]
+    }
 };
+
+module.exports = config;

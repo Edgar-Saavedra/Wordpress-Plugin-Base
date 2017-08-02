@@ -1,19 +1,21 @@
+const webpackConfig = require('./webpack.config');
 module.exports = function(grunt) {
-    require('jit-grunt')(grunt);
+    //require('jit-grunt')(grunt);
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-webpack');
-    var webpack = require("webpack");
-    var webpackConfig = require("./webpack.config.js");
+    grunt.registerTask('default', 'Log some stuff.', function() {
+        grunt.log.write(webpackConfig).ok();
+    });
     grunt.initConfig({
         //see https://github.com/webpack/webpack-with-common-libs/blob/master/package.json
         webpack: {
-            options: webpackConfig,
-            "build-dev": {
-                // devtool: "sourcemap",
-                //debug: true
-            }
+            options: {
+                stats: !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+            },
+            prod: webpackConfig,
+            dev: Object.assign({ watch: true }, webpackConfig)
         },
         concat: {
             basic: {
@@ -73,7 +75,7 @@ module.exports = function(grunt) {
             js: {
                 files: ["assets/js/**/*"],
                 //to run additional tasks
-                tasks: ["webpack:build-dev"],
+                 tasks: ["webpack:prod"],
                 // tasks: ["webpack:build-dev","webpack-dev-server"],
                 options: {
                     spawn: false,
@@ -81,4 +83,5 @@ module.exports = function(grunt) {
             }
         }
     });
+
 };
