@@ -9,6 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "immutable": "^3.8.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "whatwg-fetch": "*"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -30,6 +37,10 @@
     "jest-cli": "^20.0.4",
     "jit-grunt": "^0.9.1",
     "json-loader": "^0.5.4",
+    "react-addons-test-utils": "^15.6.0",
+    "react-test-renderer": "^15.6.1",
+    "redux": "^3.7.1",
+    "redux-mock-store": "^1.2.3",
     "sinon": "^2.3.7",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.2.2",
